@@ -1,7 +1,7 @@
-import Navbar from '@/components/Navbar'
 import './globals.css'
-import Footer from '@/components/Footer'
 import Provider from '@/components/Provider'
+import Navbar from '@/components/Navbar'
+import Footer from '@/components/Footer'
 
 export const metadata = {
   title: 'Car Hub',
@@ -13,9 +13,9 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className='relative'>
         <Provider>
-          <Navbar />
+          <Navbar/>
           {children}
-          <Footer />
+          <Footer/>
         </Provider>
       </body>
     </html>

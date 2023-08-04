@@ -5,7 +5,8 @@ import { manufacturers, carModels, yearsOfProduction } from "@/constants";
 import { Combobox, Transition } from "@headlessui/react";
 import Image from "next/image";
 import { transpileModule } from "typescript";
-import { Autocomplete, FormControl, FormControlLabel, FormLabel, InputAdornment, InputLabel, MenuItem, OutlinedInput, Radio, RadioGroup, Select, TextField } from "@mui/material";
+import { Autocomplete, Box, CircularProgress, Fade, FormControl, FormControlLabel, FormLabel, InputAdornment, InputLabel, MenuItem, OutlinedInput, Radio, RadioGroup, Select, TextField, Typography } from "@mui/material";
+import { setTimeout } from "timers";
 
 
 interface CarRentProps {
@@ -73,17 +74,17 @@ const RentCar = ({ isOpen, setIsOpen, refreshCars, setRefreshCars }: CarRentProp
 
     console.log(manufacturer)
     return (
-        <div className="fixed inset-1/2 flex justify-center items-center transition transform">
+        <div className="fixed inset-1/2 flex justify-center items-center">
             {isOpen && (
-                <div className="relative flex justify-center items-center ">
-                    <div className="bg-white shadow-lg shadow-black py-3 px-5">
+                <div className="relative flex justify-center items-center">
+                    <div className="bg-white shadow-lg shadow-black py-3 px-5 w-[270px]">
                         <div className="relative mb-3 border-b border-b-gray-700">
                             <h3>Rent a new car</h3>
                             <button onClick={() => (setIsOpen(false))} className="text-red absolute top-0 right-0">
                                 X
                             </button>
                         </div>
-                        <div className="w-80">
+                        <div>
                             <form onSubmit={handleSubmit} className="flex flex-col">
                                 {pageNumber === 1 && (
 
@@ -134,17 +135,6 @@ const RentCar = ({ isOpen, setIsOpen, refreshCars, setRefreshCars }: CarRentProp
                                         </div>
                                     </div>
 
-
-
-
-                                    // <div className="mt-3">
-                                    //     {manufacturers.map((car) => (
-                                    //         <button key={car} className="px-3">
-                                    //             {car}
-                                    //         </button>
-                                    //     ))}
-                                    // </div>
-
                                 )}
                                 {pageNumber === 2 && (
                                     <div className="mt-3">
@@ -172,82 +162,91 @@ const RentCar = ({ isOpen, setIsOpen, refreshCars, setRefreshCars }: CarRentProp
                                 {pageNumber === 3 && (
                                     <div>
                                         {/* VITES */}
-                                        <div className="mt-3 flex justify-around">
-                                            <FormControl className="w-full">
+                                        <div className="mt-3 flex items-center">
+                                            <FormControl className="w-1/2 sm:w-2/3">
                                                 <FormLabel id="demo-row-radio-buttons-group-label">Gear</FormLabel>
                                                 <RadioGroup
                                                     row
                                                     aria-labelledby="demo-row-radio-buttons-group-label"
                                                     name="row-radio-buttons-group"
+                                                    onChange={(e) => {
+                                                        setVites(e.target.value)
+                                                    }}
                                                 >
                                                     <FormControlLabel value="auto" control={<Radio />} label="Auto" />
                                                     <FormControlLabel value="manuel" control={<Radio />} label="Manuel" />
                                                 </RadioGroup>
                                             </FormControl>
 
-                                            <FormControl >
+                                            {/* YEAR */}
+                                            <FormControl className="w-1/2 sm:1/3">
                                                 <InputLabel id="demo-simple-select-label">Year</InputLabel>
                                                 <Select
                                                     labelId="demo-simple-select-label"
                                                     id="demo-simple-select"
                                                     label="Year"
                                                     className="max-h-32"
+                                                    onChange={(e) => {
+                                                        setYear(e.target.value)
+                                                    }}
                                                 >
                                                     {yearsOfProduction.map((year) => (
                                                         <MenuItem value={year}>{year}</MenuItem>
                                                     ))}
                                                 </Select>
                                             </FormControl>
+                                            {/* YEAR */}
                                         </div>
                                         {/* VITES */}
 
-                                        {/* YEAR */}
-                                        <div className="mt-3">
-
-                                        </div>
-                                        {/* YEAR */}
-
                                         {/* CITY_MNG */}
                                         <div className="mt-3">
-                                            <input onChange={(e) => (setCity_mpg(e.target.value))} required type="number" name="city_mng" id="price" placeholder="City mng..." className="rentcar__input" />
+
+                                            <TextField
+                                                id="outlined-number"
+                                                label="City mpg"
+                                                type="number"
+                                                onChange={(e) => {
+                                                    setCity_mpg(e.target.value)
+                                                }}
+                                                fullWidth
+                                            />
                                         </div>
                                         {/* CITY_MNG */}
 
                                         {/* HIGWAY_MNG */}
                                         <div className="mt-3">
-                                            <input onChange={(e) => (setHighway_mpg(e.target.value))} required type="number" name="higway_mng" id="price" placeholder="Higway mng" className="rentcar__input" />
+
+                                            <TextField
+                                                id="outlined-number"
+                                                label="Higway mpg"
+                                                type="number"
+                                                onChange={(e) => {
+                                                    setHighway_mpg(e.target.value)
+                                                }}
+                                                fullWidth
+                                            />
                                         </div>
                                         {/* HIGWAY_MNG */}
-
-                                    </div>
-
-                                )}
-                                {pageNumber === 4 && (
-                                    <div>
-                                        Loading
-                                    </div>
-                                )}
-
-
-                                {pageNumber === 3 && (
-                                    <div className="text-center">
-                                        <button type="submit" disabled={submitting} className="border mt-3 mb-5  rounded-xl py-1 px-5 bg-blue-200 hover:bg-blue-500">
-                                            Rent!
-                                        </button>
-
-                                        <div className="text-end mt-2">
-
-                                            <button type="submit" onClick={() => (setPageNumber(pageNumber - 1))} className="border rounded-xl py-1 px-3 bg-blue-200 hover:bg-blue-500">
-                                                Back
+                                        {/* BUTTONSS */}
+                                        <div className="text-center">
+                                            <button type="submit" disabled={submitting} className="border mt-3 mb-5  rounded-xl py-1 px-5 bg-blue-200 hover:bg-blue-500">
+                                                Rent!
                                             </button>
 
-                                            <button type="submit" onClick={() => (setPageNumber(pageNumber + 1))} className="border rounded-xl py-1 px-3 bg-blue-200 hover:bg-blue-500 disabled:opacity-75" disabled={true}>
-                                                Next
-                                            </button>
+                                            <div className="text-end mt-2">
+
+                                                <button onClick={() => (setPageNumber(pageNumber - 1))} className="border rounded-xl py-1 px-3 bg-blue-200 hover:bg-blue-500">
+                                                    Back
+                                                </button>
+
+                                                <button onClick={() => (setPageNumber(pageNumber + 1))} className="border rounded-xl py-1 px-3 bg-blue-200 hover:bg-blue-500 disabled:opacity-75" disabled={true}>
+                                                    Next
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 )}
-
                             </form>
                         </div>
 

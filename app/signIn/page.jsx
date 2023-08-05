@@ -1,11 +1,17 @@
 'use client'
-import { TextField } from '@mui/material'
-import React from 'react'
+import { FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField } from '@mui/material'
+import { useState } from 'react'
 import { FcGoogle } from 'react-icons/fc'
 import { AiFillFacebook } from 'react-icons/ai'
 import Link from 'next/link'
+import { MdVisibility, MdVisibilityOff } from 'react-icons/md'
 
 const signIn = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
   return (
     <div className="w-full flex justify-center items-center">
       <div className='border my-32 border-solid border-gray-600 rounded p-5 w-64 sm:w-[300px]'>
@@ -21,22 +27,35 @@ const signIn = () => {
               margin="normal"
               required
             />
-            <TextField
-              label="Password"
-              variant="outlined"
-              type="password"
-              fullWidth
-              margin="normal"
-              required
-            />
+            <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
+              <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+              <OutlinedInput
+                id="outlined-adornment-password"
+                required
+                type={showPassword ? 'text' : 'password'}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <MdVisibilityOff /> : <MdVisibility />}
+                                     </IconButton>
+                                      </InputAdornment>
+                }
+                label="Password"
+              />
+            </FormControl>
           </div>
           <div>
             <i className='text-xs'>Sign in with your acounts</i>
           </div>
           <div className='flex w-full justify-around mt-1'>
-              <FcGoogle className='w-10 h-10' />
-            
-              <AiFillFacebook className='w-10 h-10' />
+            <FcGoogle className='w-10 h-10 hover:cursor-pointer' />
+
+            <AiFillFacebook className='w-10 h-10 hover:cursor-pointer' />
           </div>
           <div className='my-2'>
             <button type="submit" className='bg-sky-500 px-3 py-2 rounded-full hover:bg-sky-400'>Log in</button>

@@ -1,7 +1,7 @@
 'use client'
 
 import { CarProps } from "@/types"
-import { calculateCarRent } from "@/utils";
+import { calculateCarRent, generateCarImageUrl } from "@/utils";
 import Image from "next/image";
 import { MouseEventHandler, useState } from "react";
 import CustomButton from "./CustomButton";
@@ -19,7 +19,7 @@ interface CarCardProps {
 }
 
 
-const CarCard = ({ car, deleteHandle, editHandle, isRentFunction, rentDisabled }: CarCardProps) => {
+const CarCard = ({ car, deleteHandle, editHandle, isRentFunction, rentDisabled }: any) => {
 
     const { carmodel, carbrand, price, vites, city_mpg, year, highway_mpg } = car
 
@@ -29,18 +29,17 @@ const CarCard = ({ car, deleteHandle, editHandle, isRentFunction, rentDisabled }
     const [isOpen, setIsOpen] = useState(false);
     const [isRent, setIsRent] = useState(car.isRent)
 
-    const { data: session } = useSession();
+    const { data: session }: any = useSession();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setIsRent(e.target.checked)
         isRentFunction()
-        console.log(isRent)
     }
 
     const handleProfileClick: MouseEventHandler<HTMLDivElement> = () => {
         if (car?.userId._id === session?.user.id) {
             router.push('/profile')
-        }else {
+        } else {
             router.push(`/profile/${car.userId._id}`)
         }
     }
@@ -70,9 +69,9 @@ const CarCard = ({ car, deleteHandle, editHandle, isRentFunction, rentDisabled }
                 <span className='self-end text-[14px] leading-[17px] font-medium'>/day</span>
             </p>
 
-            <div className="relative w-full h-40 my-3 object-contain">
+            <div className="relative w-full h-40 sm:h-64 my-3 object-contain">
                 <Image
-                    src='/hero.png'
+                    src={generateCarImageUrl(`${car.carbrand}1`)}
                     alt="car model"
                     fill
                     priority

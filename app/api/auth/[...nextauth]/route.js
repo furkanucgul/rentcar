@@ -1,30 +1,31 @@
 import NextAuth from 'next-auth'
 import User from '@/models/user'
-import {connectToDB} from '@/utils/database'
+import { connectToDB } from '@/utils/database'
 import GoogleProvider from 'next-auth/providers/google'
 
 const handler = NextAuth({
     providers: [
         GoogleProvider({
-            clientId:process.env.GOOGLE_ID,
-            clientSecret:process.env.GOOGLE_CLIENT_SECRET
+            clientId: process.env.GOOGLE_ID,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET
         })
     ],
+    requestTimeout: 30000, // 30 saniye
     callbacks: {
-        async session({session}) {
-            const sessionUser = await User.findOne({email: session.user.email})
+        async session({ session }) {
+            const sessionUser = await User.findOne({ email: session.user.email })
             session.user.id = sessionUser._id.toString();
 
             return session
         },
-        async signIn({profile}) {
+        async signIn({ profile }) {
             try {
                 await connectToDB();
                 console.log(profile)
 
-                const userExist = await User.findOne({email: profile.email})
+                const userExist = await User.findOne({ email: profile.email })
 
-                if(!userExist){
+                if (!userExist) {
                     await User.create({
                         email: profile.email,
                         username: profile.name,
@@ -41,4 +42,4 @@ const handler = NextAuth({
     }
 })
 
-export {handler as GET, handler as POST }
+export { handler as GET, handler as POST }

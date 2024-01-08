@@ -19,30 +19,84 @@ export const manufacturers = [
   'Jeep',
   'Tesla',
 ];
-
-export const carModels = {
-  notfound:[],
-  Toyota: ["Corolla", "Camry", "RAV4", "Yaris", "Prius"],
-  Honda: ["Civic", "Accord", "CR-V", "Pilot", "City"],
-  Ford: ["Mustang", "Fiesta", "Focus", "Escape", "Explorer"],
-  Volkswagen: ["Golf", "Passat", "Tiguan", "Jetta", "Polo"],
-  BMW: ["3 Series", "5 Series", "X3", "X5", "7 Series"],
-  "Mercedes-Benz": ["C-Class", "E-Class", "GLC", "S-Class", "G-Class"],
-  Audi: ["A4", "A6", "Q5", "Q7", "TT"],
-  Chevrolet: ["Camaro", "Silverado", "Equinox", "Malibu", "Traverse"],
-  Hyundai: ["Elantra", "Sonata", "Tucson", "Santa Fe", "Kona"],
-  Nissan: ["Altima", "Maxima", "Rogue", "Murano", "Pathfinder"],
-  Kia: ["Optima", "Sorento", "Sportage", "Forte", "Telluride"],
-  Volvo: ["XC60", "XC90", "S60", "V60", "V90"],
-  Mazda: ["Mazda3", "Mazda6", "CX-5", "CX-9", "MX-5 Miata"],
-  Fiat: ["500", "Panda", "Tipo", "Spider", "Doblo"],
-  Renault: ["Clio", "Megane", "Captur", "Kadjar", "Talisman"],
-  Peugeot: ["208", "308", "3008", "5008", "508"],
-  Subaru: ["Impreza", "Outback", "Forester", "Crosstrek", "Legacy"],
-  Lexus: ["RX", "NX", "ES", "LS", "GX"],
-  Jeep: ["Wrangler", "Cherokee", "Grand Cherokee", "Compass", "Renegade"],
-  Tesla: ["Model S", "Model 3", "Model X", "Model Y", "Cybertruck"],
-};
+export const carModels = [
+  {
+    brand: "Toyota",
+    models: ["Corolla", "Camry", "RAV4", "Yaris", "Prius"],
+  },
+  {
+    brand: "Honda",
+    models: ["Civic", "Accord", "CR-V", "Pilot", "City"],
+  },
+  {
+    brand: "Ford",
+    models: ["Mustang", "Fiesta", "Focus", "Escape", "Explorer"],
+  },
+  {
+    brand: "Volkswagen",
+    models: ["Golf", "Passat", "Tiguan", "Jetta", "Polo"],
+  },
+  {
+    brand: "BMW",
+    models: ["3 Series", "5 Series", "X3", "X5", "7 Series"],
+  },
+  {
+    brand: "Audi",
+    models: ["A4", "A6", "Q5", "Q7", "TT"],
+  },
+  {
+    brand: "Chevrolet",
+    models: ["Camaro", "Silverado", "Equinox", "Malibu", "Traverse"],
+  },
+  {
+    brand: "Hyundai",
+    models: ["Elantra", "Sonata", "Tucson", "Santa Fe", "Kona"],
+  },
+  {
+    brand: "Nissan",
+    models: ["Altima", "Maxima", "Rogue", "Murano", "Pathfinder"],
+  },
+  {
+    brand: "Kia",
+    models: ["Optima", "Sorento", "Sportage", "Forte", "Telluride"],
+  },
+  {
+    brand: "Volvo",
+    models: ["XC60", "XC90", "S60", "V60", "V90"],
+  },
+  {
+    brand: "Mazda",
+    models: ["Mazda3", "Mazda6", "CX-5", "CX-9", "MX-5 Miata"],
+  },
+  {
+    brand: "Fiat",
+    models: ["500", "Panda", "Tipo", "Spider", "Doblo"],
+  },
+  {
+    brand: "Renault",
+    models: ["Clio", "Megane", "Captur", "Kadjar", "Talisman"],
+  },
+  {
+    brand: "Peugeot",
+    models: ["208", "308", "3008", "5008", "508"],
+  },
+  {
+    brand: "Subaru",
+    models: ["Impreza", "Outback", "Forester", "Crosstrek", "Legacy"],
+  },
+  {
+    brand: "Lexus",
+    models: ["RX", "NX", "ES", "LS", "GX"],
+  },
+  {
+    brand: "Jeep",
+    models: ["Wrangler", "Cherokee", "Grand Cherokee", "Compass", "Renegade"],
+  },
+  {
+    brand: "Tesla",
+    models: ["Model S", "Model 3", "Model X", "Model Y", "Cybertruck"],
+  }
+]
 
 export const yearsOfProduction = [
   "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008",

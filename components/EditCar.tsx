@@ -1,7 +1,7 @@
 'use client'
 import { useSession } from "next-auth/react";
 import { Fragment, useEffect, useState } from "react";
-import { manufacturers } from "@/constants";
+import { carModels, manufacturers } from "@/constants";
 import { Combobox, Transition } from "@headlessui/react";
 import Image from "next/image";
 import { transpileModule } from "typescript";
@@ -18,7 +18,7 @@ interface CarRentProps {
     setRefreshCars: (refreshCars: boolean) => void;
 }
 
-const EditCar = ({ editOpen, setEditOpen, carId, carInfo, setRefreshCars, refreshCars }: CarRentProps) => {
+const EditCar = ({ editOpen, setEditOpen, carId, carInfo, setRefreshCars, refreshCars }: any) => {
 
     const { data: session } = useSession();
 
@@ -28,9 +28,10 @@ const EditCar = ({ editOpen, setEditOpen, carId, carInfo, setRefreshCars, refres
     const [highway_mpg, setHighway_mpg] = useState(0)
     const [city_mpg, setCity_mpg] = useState(0)
     const [year, setYear] = useState(2022)
+    const [isRent, setIsRent] = useState(true)
 
     const [pageNumber, setPageNumber] = useState(1)
-    const [query, setQuery] = useState('');
+    const [query, setQuery] = useState('Volkswagen');
     const [query2, setQuery2] = useState('')
 
     useEffect(() => {
@@ -41,22 +42,31 @@ const EditCar = ({ editOpen, setEditOpen, carId, carInfo, setRefreshCars, refres
         setPrice(carInfo.price)
         setYear(carInfo.year)
         setVites(carInfo.vites)
+        setIsRent(carInfo.isRent)
     }, [carId])
 
 
+    console.log(carInfo)
 
 
+    const filteredManufacturers = query === ''
+        ? manufacturers
+        : manufacturers.filter((item) =>
+            item.toLowerCase().replace(/\s+/g, "").includes(query.toLowerCase().replace(/\s+/g, ""))
+        )
 
-    // const filteredManufacturers = query === ''
-    //     ? manufacturers
-    //     : manufacturers.filter((item) =>
-    //         item.toLowerCase().replace(/\s+/g, "").includes(query.toLowerCase().replace(/\s+/g, ""))
-    //     )
+    const getBrand = (query) => {
+        const brands = carModels.map((car) => car.brand);
+        return brands.includes(query) ? query : "Volkswagen";
+    };
 
-    // const filteredModels = query2 === '' ? cars.audi.versions :
-    //     cars.audi.versions.filter((item) => (
-    //         item.toLowerCase().replace(/\s+/g, "").includes(query2.toLowerCase().replace(/\s+/g, ""))
-    //     ))
+    const allModels = carModels.find(car => car.brand === getBrand(query)).models
+
+    const filterModels = carModels.find(car => car.brand === getBrand(query)).models.filter((item) => (
+        item.toLowerCase().replace(/\s+/g, "").includes(query2.toLowerCase().replace(/\s+/g, ""))
+    ))
+
+    const filteredModels = query2 === '' ? allModels : filterModels
 
 
 
@@ -75,6 +85,7 @@ const EditCar = ({ editOpen, setEditOpen, carId, carInfo, setRefreshCars, refres
                     highway_mpg,
                     city_mpg,
                     year,
+                    isRent
                 })
             })
         } catch (error) {
@@ -136,32 +147,32 @@ const EditCar = ({ editOpen, setEditOpen, carId, carInfo, setRefreshCars, refres
                                     </div>
 
                                     <div className="mt-3">
-                                            <div className="relative">
-                                            <input onChange={(e) => (setPrice(e.target.value))} required type="number" name="price" id="price" placeholder="price/day" className="rentcar__input" value={price} />
+                                        <div className="relative">
+                                            <input onChange={(e) => (setPrice(parseInt(e.target.value)))} required type="number" name="price" id="price" placeholder="price/day" className="rentcar__input" value={price} />
                                             <div className="absolute top-[-10px] left-1">
                                                 Price
                                             </div>
-                                            </div>
-                                        
+                                        </div>
+
                                     </div>
 
 
                                     <div>
                                         {/* YEAR */}
                                         <div className="mt-3">
-                                            <input onChange={(e) => (setYear(e.target.value))} required type="number" name="price" id="price" placeholder="year" className="rentcar__input" value={year} />
+                                            <input onChange={(e) => (setYear(parseInt(e.target.value)))} required type="number" name="price" id="price" placeholder="year" className="rentcar__input" value={year} />
                                         </div>
                                         {/* YEAR */}
 
                                         {/* CITY_MNG */}
                                         <div className="mt-3">
-                                            <input onChange={(e) => (setCity_mpg(e.target.value))} required type="number" name="city_mng" id="price" placeholder="City mng..." className="rentcar__input" value={city_mpg} />
+                                            <input onChange={(e) => (setCity_mpg(parseInt(e.target.value)))} required type="number" name="city_mng" id="price" placeholder="City mng..." className="rentcar__input" value={city_mpg} />
                                         </div>
                                         {/* CITY_MNG */}
 
                                         {/* HIGWAY_MNG */}
                                         <div className="mt-3">
-                                            <input onChange={(e) => (setHighway_mpg(e.target.value))} required type="number" name="higway_mng" id="price" placeholder="Higway mng" className="rentcar__input" value={highway_mpg} />
+                                            <input onChange={(e) => (setHighway_mpg(parseInt(e.target.value)))} required type="number" name="higway_mng" id="price" placeholder="Higway mng" className="rentcar__input" value={highway_mpg} />
                                         </div>
                                         {/* HIGWAY_MNG */}
 

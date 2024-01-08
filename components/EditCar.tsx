@@ -55,14 +55,14 @@ const EditCar = ({ editOpen, setEditOpen, carId, carInfo, setRefreshCars, refres
             item.toLowerCase().replace(/\s+/g, "").includes(query.toLowerCase().replace(/\s+/g, ""))
         )
 
-    const getBrand = (query) => {
+    const getBrand = (query: any) => {
         const brands = carModels.map((car) => car.brand);
         return brands.includes(query) ? query : "Volkswagen";
     };
 
-    const allModels = carModels.find(car => car.brand === getBrand(query)).models
+    const allModels: any = carModels.find(car => car.brand === getBrand(query))?.models
 
-    const filterModels = carModels.find(car => car.brand === getBrand(query)).models.filter((item) => (
+    const filterModels: any = carModels.find(car => car.brand === getBrand(query))?.models.filter((item) => (
         item.toLowerCase().replace(/\s+/g, "").includes(query2.toLowerCase().replace(/\s+/g, ""))
     ))
 
